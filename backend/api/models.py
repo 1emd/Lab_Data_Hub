@@ -130,3 +130,16 @@ class Reference(models.Model):
 
     def __str__(self):
         return f'Reference ID: {self.id}'
+
+
+# class TestResult(models.Model):
+#     test = models.ForeignKey(Tests, on_delete=models.CASCADE)
+#     duration_seconds = models.IntegerField()
+#     average_score = models.DecimalField(max_digits=10, decimal_places=5)
+
+
+class Result(models.Model):
+    test = models.ForeignKey(Tests, on_delete=models.CASCADE)
+
+    def get_results(self):
+        return Result.objects.filter(test=self)
