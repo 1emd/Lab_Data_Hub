@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import (Labs, Tests, Indicators, Metrics, IndicatorMetric,
-                     Scores, Reference, Result)
+from api.models import (Labs, Tests, Indicators, Metrics, IndicatorMetric,
+                        Scores, Reference, MeasurementResult, ResearchResult)
 
 
 @admin.register(Labs)
@@ -46,6 +46,12 @@ class ReferenceAdmin(admin.ModelAdmin):
                     'updated_at')
 
 
-@admin.register(Result)
-class ResultAdmin(admin.ModelAdmin):
-    list_display = ('id', 'test',)
+@admin.register(MeasurementResult)
+class MeasurementResulAdmin(admin.ModelAdmin):
+    list_display = ('id', 'score', 'indicator_name', 'metric_name',
+                    'metric_unit', 'is_within_normal_range',)
+
+
+@admin.register(ResearchResult)
+class ResearchResultAdmin(admin.ModelAdmin):
+    list_display = ('id', 'lab_id', 'duration_seconds',)

@@ -132,14 +132,30 @@ class Reference(models.Model):
         return f'Reference ID: {self.id}'
 
 
-# class TestResult(models.Model):
-#     test = models.ForeignKey(Tests, on_delete=models.CASCADE)
-#     duration_seconds = models.IntegerField()
-#     average_score = models.DecimalField(max_digits=10, decimal_places=5)
+class MeasurementResult(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    score = models.ForeignKey(Scores, on_delete=models.CASCADE)
+    indicator_name = models.ForeignKey(Indicators, on_delete=models.CASCADE)
+    metric_name = models.ForeignKey(
+        Metrics, on_delete=models.CASCADE,
+        related_name='measurement_results_name')
+    metric_unit = models.ForeignKey(
+        Metrics, on_delete=models.CASCADE,
+        related_name='measurement_results_unit')
+    is_within_normal_range = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = 'Результат измерения'
+        verbose_name_plural = 'Результаты измерений'
 
 
-class Result(models.Model):
-    test = models.ForeignKey(Tests, on_delete=models.CASCADE)
+class ResearchResult(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    lab_id = models.ForeignKey(Labs, on_delete=models.CASCADE)
+    duration_seconds = models.IntegerField()
+    measurement_results = models.ManyToManyField(
+        MeasurementResult, related_name='research_results')
 
-    def get_results(self):
-        return Result.objects.filter(test=self)
+    class Meta:
+        verbose_name = 'Результат исследования'
+        verbose_name_plural = 'Результаты исследований'

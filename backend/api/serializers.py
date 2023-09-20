@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from api.models import (Tests, Scores, IndicatorMetric, Reference,
-                        Metrics, Indicators, Labs,)
+                        Metrics, Indicators, Labs, ResearchResult,
+                        MeasurementResult)
 
 
 class LabsSerializer(serializers.ModelSerializer):
@@ -22,10 +23,15 @@ class MetricsSerializer(serializers.ModelSerializer):
 
 
 class TestSerializer(serializers.ModelSerializer):
+    # duration_seconds = serializers.IntegerField()
 
     class Meta:
         model = Tests
         fields = '__all__'
+
+    def get_duration_seconds(self, obj):
+        duration = (obj.completed_at - obj.started_at).total_seconds()
+        return duration
 
 
 class IndicatorMetricSerializer(serializers.ModelSerializer):
@@ -48,69 +54,25 @@ class ReferenceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ResultSerializer(serializers.Serializer):
-    id = serializers.UUIDField()
-    score = serializers.DecimalField(max_digits=10, decimal_places=5)
-    indicator_name = serializers.CharField()
-    metric_name = serializers.CharField()
-    metric_unit = serializers.CharField()
-    is_within_normal_range = serializers.BooleanField()
+class MeasurementResultSerializer(serializers.ModelSerializer):
+    score = serializers.CharField(source='score.score')
+    indicator_name = serializers.CharField(source='indicator_name.name')
+    metric_name = serializers.CharField(source='metric_name.name')
+    metric_unit = serializers.CharField(source='metric_unit.unit')
+
+    class Meta:
+        model = MeasurementResult
+        fields = '__all__'
 
 
-class ResponseSerializer(serializers.Serializer):
-    id = serializers.UUIDField()
-    lab_id = serializers.UUIDField()
-    duration_seconds = serializers.SerializerMethodField()
-    # duration_seconds = serializers.IntegerField()
-    # results = ResultSerializer(many=True)
-    results = ResultSerializer(many=True, source='result_set')
+class ResearchResultSerializer(serializers.ModelSerializer):
+    lab_id = serializers.UUIDField(source='lab_id.id')
+    measurement_results = MeasurementResultSerializer(
+        many=True, read_only=True)
 
-    def get_duration_seconds(self, obj):
-        # Получаем время начала и завершения исследования
-        started_at = obj.started_at
-        completed_at = obj.completed_at
+    class Meta:
+        model = ResearchResult
+        fields = ['id', 'lab_id', 'duration_seconds', 'measurement_results']
 
-        time_difference = completed_at - started_at
-        duration_seconds = time_difference.total_seconds()
-        return duration_seconds
-
-
-# class TestResultSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = TestResult
-#         fields = '__all__'
-
-
-# class TestSerializer(serializers.ModelSerializer):
-#     scores = ScoresSerializer(many=True, read_only=True)
-
-#     class Meta:
-#         model = Tests
-#         fields = '__all__'
-
-#     def get_lab_results(self, obj):
-#         scores = Scores.objects.filter(test_id=obj.id, is_active=True)
-#         results = []
-
-#         for score in scores:
-#             indicator_metric = IndicatorMetric.objects.get(
-#                 id=score.indicator_metric_id_id)
-#             indicator = Indicators.objects.get(
-#                 id=indicator_metric.indicator_id_id)
-#             metric = Metrics.objects.get(id=indicator_metric.metric_id_id)
-
-#             results.append({
-#                 "id": score.id,
-#                 "score": str(score.score),
-#                 "indicator_name": indicator.name,
-#                 "metric_name": metric.name,
-#                 "metric_unit": metric.unit,
-#                 "is_within_normal_range": score.is_within_normal_range,
-#             })
-
-#         return {
-#             "id": obj.id,
-#             "lab_id": obj.lab_id.id,
-#             "duration_seconds": (obj.completed_at - obj.started_at).seconds,
-#             "results": results,
-#         }
+    def get_lab_id(self, obj):
+        return str(obj.lab_id)

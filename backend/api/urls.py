@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from api.views import (LabsViewSet, TestsViewSet, IndicatorsViewSet,
                        MetricsViewSet, IndicatorMetricViewSet, ScoresViewSet,
-                       ReferenceViewSet, TestResultListView)
+                       ReferenceViewSet, ResearchResultViewSet)
 
 router = DefaultRouter()
 
@@ -18,7 +18,7 @@ v1_router.register('indicator-metrics', IndicatorMetricViewSet,
                    basename='indicator-metrics')
 v1_router.register('scores', ScoresViewSet, basename='scores')
 v1_router.register('references', ReferenceViewSet, basename='references')
-v1_router.register('test-results', TestResultListView,
+v1_router.register('test-results', ResearchResultViewSet,
                    basename='test-results')
 
 

@@ -1,13 +1,15 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import ListAPIView
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework import status
 from api.models import (Tests, Scores, IndicatorMetric, Metrics,
-                        Indicators, Labs, Reference,)
+                        Indicators, Labs, Reference, ResearchResult)
 from api.serializers import (TestSerializer, LabsSerializer,
                              IndicatorsSerializer, MetricsSerializer,
                              IndicatorMetricSerializer, ScoresSerializer,
-                             ReferenceSerializer, ResponseSerializer)
+                             ReferenceSerializer, ResearchResultSerializer,
+                             MeasurementResult)
 
 
 class LabsViewSet(ModelViewSet):
@@ -44,34 +46,17 @@ class TestsViewSet(ModelViewSet):
     queryset = Tests.objects.all()
     serializer_class = TestSerializer
 
-    # @action(detail=False, methods=['GET'])
-    # def lab_results(self, request):
-    #     lab_id = request.query_params.get('lab_id')
 
-    #     if not lab_id:
-    #         return Response({"error": "lab_id query parameter is required."},
-    #                         status=400)
+class ResearchResultViewSet(ModelViewSet):
+    queryset = ResearchResult.objects.all()
+    serializer_class = ResearchResultSerializer
 
-    #     lab = Labs.objects.filter(id=lab_id).first()
-    #     if not lab:
-    #         return Response({"error": "Lab not found."}, status=404)
-
-    #     tests = Tests.objects.filter(lab_id=lab_id, is_active=True)
-    #     serializer = TestSerializer(tests, many=True)
-
-    #     return Response(serializer.data)
-
-
-class TestResultListView(ModelViewSet):
-    queryset = Tests.objects.all()
-    serializer_class = ResponseSerializer
-
-
-# class TestResultViewSet(ModelViewSet):
-#     queryset = TestResult.objects.all()
-#     serializer_class = TestResultSerializer
-
-#     def perform_create(self, serializer):
-#         instance = serializer.save()
-#         instance.calculate_average_score()
-#         instance.save()
+    def list(self, request):
+        lab_id = self.request.query_params.get('lab_id')
+        if lab_id:
+            research_results = ResearchResult.objects.filter(lab_id=lab_id)
+            serializer = ResearchResultSerializer(research_results, many=True)
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'lab_id parameter is required'},
+                            status=status.HTTP_400_BAD_REQUEST)
