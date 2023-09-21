@@ -29,9 +29,9 @@ class TestSerializer(serializers.ModelSerializer):
         model = Tests
         fields = '__all__'
 
-    def get_duration_seconds(self, obj):
-        duration = (obj.completed_at - obj.started_at).total_seconds()
-        return duration
+    # def get_duration_seconds(self, obj):
+    #     duration = (obj.completed_at - obj.started_at).total_seconds()
+    #     return duration
 
 
 class IndicatorMetricSerializer(serializers.ModelSerializer):

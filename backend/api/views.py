@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
+from django_filters.rest_framework import DjangoFilterBackend
 from api.models import (Tests, Scores, IndicatorMetric, Metrics,
                         Indicators, Labs, Reference, ResearchResult)
 from api.serializers import (TestSerializer, LabsSerializer,
@@ -10,6 +11,7 @@ from api.serializers import (TestSerializer, LabsSerializer,
                              IndicatorMetricSerializer, ScoresSerializer,
                              ReferenceSerializer, ResearchResultSerializer,
                              MeasurementResult)
+from .filters import ResearchResultFilter
 
 
 class LabsViewSet(ModelViewSet):
@@ -50,6 +52,14 @@ class TestsViewSet(ModelViewSet):
 class ResearchResultViewSet(ModelViewSet):
     queryset = ResearchResult.objects.all()
     serializer_class = ResearchResultSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ResearchResultFilter
+
+    def retrieve(self, request, pk=None):
+        lab_id = pk
+        queryset = ResearchResult.objects.filter(lab_id=lab_id)
+        serializer = ResearchResultSerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def list(self, request):
         lab_id = self.request.query_params.get('lab_id')
