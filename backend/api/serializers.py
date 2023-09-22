@@ -1,7 +1,24 @@
 from rest_framework import serializers
 from api.models import (Tests, Scores, IndicatorMetric, Reference,
                         Metrics, Indicators, Labs, ResearchResult,
-                        MeasurementResult)
+                        MeasurementResult, User)
+
+
+class UserCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('email', 'username', 'password')
+
+    def create(self, validated_data):
+        return User.objects.create_user(**validated_data)
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('email', 'username')
 
 
 class LabsSerializer(serializers.ModelSerializer):

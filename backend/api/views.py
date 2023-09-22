@@ -5,13 +5,28 @@ from rest_framework.response import Response
 from rest_framework import status
 from django_filters.rest_framework import DjangoFilterBackend
 from api.models import (Tests, Scores, IndicatorMetric, Metrics,
-                        Indicators, Labs, Reference, ResearchResult)
+                        Indicators, Labs, Reference, ResearchResult,
+                        User)
 from api.serializers import (TestSerializer, LabsSerializer,
                              IndicatorsSerializer, MetricsSerializer,
                              IndicatorMetricSerializer, ScoresSerializer,
                              ReferenceSerializer, ResearchResultSerializer,
-                             MeasurementResult)
-from .filters import ResearchResultFilter
+                             )
+from api.filters import ResearchResultFilter
+
+
+# class UserCreateViewSet(ModelViewSet):
+#     queryset = User.objects.all()
+#     serializer_class = CustomUserCreateSerializer
+
+#     def create(self, request, *args, **kwargs):
+#         serializer = self.get_serializer(data=request.data)
+#         if serializer.is_valid():
+#             user = serializer.save()
+#             return Response(
+#                 {"message": "User created successfully", "user_id": user.id},
+#                 status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LabsViewSet(ModelViewSet):

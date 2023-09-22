@@ -1,6 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 import uuid
+
+User = get_user_model()
 
 
 class Labs(models.Model):
