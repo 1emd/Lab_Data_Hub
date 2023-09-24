@@ -110,7 +110,7 @@ class Scores(models.Model):
     class Meta:
         # ordering = ('-created_at', )
         verbose_name = 'Количественное значение'
-        # verbose_name_plural = 'Количественное значение'
+        verbose_name_plural = 'Количественное значение'
 
     def __str__(self):
         return f'Score ID: {self.id}'
@@ -145,20 +145,26 @@ class MeasurementResult(models.Model):
     metric_unit = models.ForeignKey(
         Metrics, on_delete=models.CASCADE,
         related_name='measurement_results_unit')
-    is_within_normal_range = models.BooleanField(default=True)
+    is_within_normal_range = models.BooleanField(default=True, editable=False)
 
     class Meta:
         verbose_name = 'Результат измерения'
         verbose_name_plural = 'Результаты измерений'
+
+    def __str__(self):
+        return f'Measurement_Result: {self.id}'
 
 
 class ResearchResult(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     lab_id = models.ForeignKey(Labs, on_delete=models.CASCADE)
     duration_seconds = models.IntegerField()
-    measurement_results = models.ManyToManyField(
+    results = models.ManyToManyField(
         MeasurementResult, related_name='research_results')
 
     class Meta:
         verbose_name = 'Результат исследования'
         verbose_name_plural = 'Результаты исследований'
+
+    def __str__(self):
+        return f'Research_Result: {self.id}'
