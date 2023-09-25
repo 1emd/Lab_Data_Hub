@@ -6,7 +6,7 @@ from drf_yasg import openapi
 
 from api.views import (LabsViewSet, TestsViewSet, IndicatorsViewSet,
                        MetricsViewSet, IndicatorMetricViewSet, ScoresViewSet,
-                       ReferenceViewSet, StudyAPIView)
+                       ReferenceViewSet, TestResultViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -34,7 +34,7 @@ v1_router.register('indicator-metrics', IndicatorMetricViewSet,
                    basename='indicator-metrics')
 v1_router.register('scores', ScoresViewSet, basename='scores')
 v1_router.register('references', ReferenceViewSet, basename='references')
-v1_router.register('test-results', StudyAPIView,
+v1_router.register('test-results', TestResultViewSet,
                    basename='test-results')
 
 

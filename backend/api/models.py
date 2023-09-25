@@ -78,7 +78,11 @@ class Metrics(models.Model):
 
 
 class IndicatorMetric(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     indicator_id = models.ForeignKey(
         Indicators, on_delete=models.CASCADE, related_name='indicator_metrics')
     metric_id = models.ForeignKey(
