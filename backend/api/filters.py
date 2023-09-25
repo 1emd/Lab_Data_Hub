@@ -1,10 +1,10 @@
 from django_filters.rest_framework import (FilterSet, UUIDFilter)
-from api.models import ResearchResult
+from api.models import Tests
 
 
-class ResearchResultFilter(FilterSet):
+class TestFilter(FilterSet):
     lab_id = UUIDFilter(field_name='lab_id__id')
 
     class Meta:
-        model = ResearchResult
+        model = Tests
         fields = ['lab_id']

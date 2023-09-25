@@ -1,12 +1,13 @@
 from django.contrib import admin
 
 from api.models import (Labs, Tests, Indicators, Metrics, IndicatorMetric,
-                        Scores, Reference, MeasurementResult, ResearchResult)
+                        Scores, Reference,)
 
 
 @admin.register(Labs)
 class LabsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'is_active', 'created_at', 'updated_at')
+    list_display = ('id', 'name', 'is_active',
+                    'created_at', 'updated_at',)
 
 
 @admin.register(Tests)
@@ -44,14 +45,3 @@ class ReferenceAdmin(admin.ModelAdmin):
     list_display = ('id', 'min_score', 'max_score',
                     'indicator_metric_id', 'is_active', 'created_at',
                     'updated_at')
-
-
-@admin.register(MeasurementResult)
-class MeasurementResulAdmin(admin.ModelAdmin):
-    list_display = ('id', 'score', 'indicator_name', 'metric_name',
-                    'metric_unit', 'is_within_normal_range',)
-
-
-@admin.register(ResearchResult)
-class ResearchResultAdmin(admin.ModelAdmin):
-    list_display = ('id', 'lab_id', 'duration_seconds',)
