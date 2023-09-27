@@ -3,6 +3,7 @@ from rest_framework.test import APIClient
 from rest_framework import status
 import uuid
 from django.utils import timezone
+from api.models import User
 
 
 @pytest.mark.django_db(transaction=True)
@@ -12,6 +13,10 @@ class TestAPIEndpoints:
     def setup_class(cls):
         cls.client = APIClient()
         cls.created_ids = {}
+
+    def create_test_user(self, username):
+        return User.objects.create_user(username=username,
+                                        password='Testpassword')
 
     def test_list_endpoint(self):
         """Проверяем все эндпоинты."""
@@ -33,14 +38,17 @@ class TestAPIEndpoints:
 
     def test_create_lab_endpoint(self):
         """Проверяем эндпоинт для создания новой лаборатории."""
+        username = 'testuser_lab'
+        user = self.create_test_user(username)
+        self.client.force_authenticate(user=user)
         url = '/api/labs/'
         lab_id = str(uuid.uuid4())
         data = {
             'id': lab_id,
             'name': 'Новая лаборатория',
             'is_active': True,
-            'created_at': '2023-09-25T11:00:00Z',
-            'updated_at': '2023-09-25T11:01:00Z'
+            'created_at': timezone.now(),
+            'updated_at': timezone.now()
         }
         response = self.client.post(url, data, format='json')
         assert response.status_code == status.HTTP_201_CREATED, (
@@ -55,12 +63,12 @@ class TestAPIEndpoints:
         url = '/api/tests/'
         data = {
             'id': test_id,
-            'started_at': '2023-09-25T11:58:27Z',
-            'completed_at': '2023-09-25T11:58:30Z',
+            'started_at': timezone.now(),
+            'completed_at': timezone.now(),
             'comment': 'Test',
             'is_active': True,
-            'created_at': '2023-09-25T11:58:25Z',
-            'updated_at': '2023-09-25T11:58:35Z',
+            'created_at': timezone.now(),
+            'updated_at': timezone.now(),
             'lab_id': lab_id
         }
         response = self.client.post(url, data, format='json')
@@ -78,8 +86,8 @@ class TestAPIEndpoints:
             'name': 'indicator_name',
             'description': 'description_indicator',
             'is_active': True,
-            'created_at': '2023-09-25T11:58:25Z',
-            'updated_at': '2023-09-25T11:58:35Z',
+            'created_at': timezone.now(),
+            'updated_at': timezone.now(),
         }
         response = self.client.post(url, data, format='json')
         assert response.status_code == status.HTTP_201_CREATED, (
@@ -97,8 +105,8 @@ class TestAPIEndpoints:
             'description': 'metric_description',
             'unit': 'metric_unit',
             'is_active': True,
-            'created_at': '2023-09-25T11:58:25Z',
-            'updated_at': '2023-09-25T11:58:35Z',
+            'created_at': timezone.now(),
+            'updated_at': timezone.now(),
         }
         response = self.client.post(url, data, format='json')
         assert response.status_code == status.HTTP_201_CREATED, (
@@ -115,8 +123,8 @@ class TestAPIEndpoints:
         data = {
             'id': indicator_metric_id,
             'is_active': True,
-            'created_at': '2023-09-25T11:58:25Z',
-            'updated_at': '2023-09-25T11:58:35Z',
+            'created_at': timezone.now(),
+            'updated_at': timezone.now(),
             'indicator_id': indicator_id,
             'metric_id': metric_id,
         }
@@ -151,14 +159,13 @@ class TestAPIEndpoints:
         """Проверяем эндпоинт для создания новой справки."""
         reference_id = str(uuid.uuid4())
         indicator_metric_id = self.test_create_indicator_metrics_endpoint()
-        current_time = timezone.now()
         url = '/api/references/'
         data = {
             'id': reference_id,
             'min_score': '10',
             'max_score': '10',
-            'created_at': current_time,
-            'updated_at': current_time,
+            'created_at': timezone.now(),
+            'updated_at': timezone.now(),
             'indicator_metric_id': indicator_metric_id
         }
         response = self.client.post(url, data, format='json')
@@ -343,6 +350,9 @@ class TestAPIEndpoints:
 
     def test_delete_test_results_for_lab(self):
         """Проверяем удаление результатов тестов по ID лаборатории."""
+        user = User.objects.create(
+            username='testuser', password='testpassword')
+        self.client.force_authenticate(user=user)
         test_id = self.test_create_test_endpoint()
         url = f'/api/test-results/{test_id}/'
         response = self.client.delete(url)
