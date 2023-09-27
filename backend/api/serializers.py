@@ -45,7 +45,7 @@ class ScoreSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Scores
-        fields = ('id', 'score', 'indicator_metric_id')
+        fields = '__all__'
 
 
 class ReferenceSerializer(serializers.ModelSerializer):
