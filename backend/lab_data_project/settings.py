@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 
@@ -8,7 +9,7 @@ SECRET_KEY = 'django-insecure-)f5mhz@afbzzi0&j$u0_xgonpg1!hzq(m%1on20^^@79+tsi+(
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
@@ -57,13 +58,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'lab_data_project.wsgi.application'
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'django'),
+        'USER': os.getenv('POSTGRES_USER', 'django'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', ''),
+        'PORT': os.getenv('DB_PORT', 5432)
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -91,6 +102,8 @@ USE_TZ = True
 
 
 STATIC_URL = 'static/'
+
+STATIC_ROOT = BASE_DIR / 'collected_static'
 
 AUTH_USER_MODEL = 'auth.User'
 
