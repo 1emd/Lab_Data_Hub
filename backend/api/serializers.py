@@ -84,8 +84,8 @@ class TestSerializer(serializers.ModelSerializer):
                 min_score = reference.min_score
                 max_score = reference.max_score
                 current_score = score.score
-                is_within_normal_range = (min_score <= current_score <=
-                                          max_score)
+                is_within_normal_range = (
+                    min_score <= current_score <= max_score)
 
             result = {
                 'id': score.id,
