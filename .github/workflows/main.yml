@@ -12,9 +12,9 @@ jobs:
       postgres:
         image: postgres:14
         env:
-          POSTGRES_USER: django
-          POSTGRES_PASSWORD: mysecretpassword
-          POSTGRES_DB: django
+          POSTGRES_USER: django_user
+          POSTGRES_PASSWORD: django_password
+          POSTGRES_DB: django_db
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -45,6 +45,12 @@ jobs:
         pip install pytest
     
     - name: Run pytest
+      env:
+        POSTGRES_USER: django_user
+        POSTGRES_PASSWORD: django_password
+        POSTGRES_DB: django_db
+        DB_HOST: 127.0.0.1
+        DB_PORT: 5432
       run: |
         cd backend/
         pytest tests/
