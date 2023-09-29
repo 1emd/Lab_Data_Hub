@@ -25,6 +25,15 @@ jobs:
       with:
         python-version: 3.10.13
 
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip 
+        pip install flake8==6.1.0 flake8-isort==6.1.0
+        pip install -r ./backend/requirements.txt 
+    - name: Test with flake8
+      run: |
+        python -m flake8 backend/
+
     - name: Apply Django Migrations
       env:
         POSTGRES_USER: django_user
@@ -34,16 +43,8 @@ jobs:
         DB_PORT: 5432
       run: |
         cd backend/
+        python manage.py makemigrations
         python manage.py migrate
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip 
-        pip install flake8==6.1.0 flake8-isort==6.1.0
-        pip install -r ./backend/requirements.txt 
-    - name: Test with flake8
-      run: |
-        python -m flake8 backend/
 
     - name: Install pytest
       run: |
