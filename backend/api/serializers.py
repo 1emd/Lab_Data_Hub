@@ -8,6 +8,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('email', 'username', 'password')
+        ref_name = 'ApiUser'
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
@@ -18,6 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('email', 'username')
+        ref_name = 'DjoserUser'
 
 
 class LabsSerializer(serializers.ModelSerializer):
