@@ -50,7 +50,6 @@ class TestResultViewSet(ModelViewSet):
     serializer_class = TestSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = TestFilter
-    allowed_methods = ['GET', 'PUT', 'PATCH', 'DELETE']
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

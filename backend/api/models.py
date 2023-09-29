@@ -15,7 +15,7 @@ class Labs(models.Model):
     updated_at = models.DateTimeField()
 
     class Meta:
-        # ordering = ('-created_at', )
+        ordering = ('-created_at', )
         verbose_name = 'Лаборатория'
         verbose_name_plural = 'Лаборатории'
 
@@ -35,7 +35,7 @@ class Tests(models.Model):
     updated_at = models.DateTimeField()
 
     class Meta:
-        # ordering = ('-created_at', )
+        ordering = ('-created_at', )
         verbose_name = 'Тест'
         verbose_name_plural = 'Тесты'
 
@@ -52,7 +52,7 @@ class Indicators(models.Model):
     updated_at = models.DateTimeField()
 
     class Meta:
-        # ordering = ('-created_at', )
+        ordering = ('-created_at', )
         verbose_name = 'Показатель'
         verbose_name_plural = 'Показатели'
 
@@ -70,7 +70,7 @@ class Metrics(models.Model):
     updated_at = models.DateTimeField()
 
     class Meta:
-        # ordering = ('-created_at', )
+        ordering = ('-created_at', )
         verbose_name = 'Метрика'
         verbose_name_plural = 'Метрики'
 
@@ -93,7 +93,7 @@ class IndicatorMetric(models.Model):
     updated_at = models.DateTimeField()
 
     class Meta:
-        # ordering = ('-created_at', )
+        ordering = ('-created_at', )
         verbose_name = 'Показатель метрики'
         verbose_name_plural = 'Показатели метрики'
 
@@ -113,7 +113,7 @@ class Scores(models.Model):
     updated_at = models.DateTimeField()
 
     class Meta:
-        # ordering = ('-created_at', )
+        ordering = ('-created_at', )
         verbose_name = 'Количественное значение'
         verbose_name_plural = 'Количественное значение'
 
@@ -132,7 +132,7 @@ class Reference(models.Model):
     updated_at = models.DateTimeField()
 
     class Meta:
-        # ordering = ('-created_at', )
+        ordering = ('-created_at', )
         verbose_name = 'Справка'
         verbose_name_plural = 'Справки'
 
