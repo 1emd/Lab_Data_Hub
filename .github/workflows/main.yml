@@ -12,7 +12,7 @@ jobs:
       postgres:
         image: postgres:14
         env:
-          POSTGRES_USER: django_user
+          POSTGRES_USER: django
           POSTGRES_PASSWORD: mysecretpassword
           POSTGRES_DB: django
         ports:
