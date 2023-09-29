@@ -1,7 +1,8 @@
 import pytest
 from django.utils import timezone
-from api.models import (Labs, Tests, Indicators, Metrics,
-                        IndicatorMetric, Scores, Reference)
+
+from api.models import (IndicatorMetric, Indicators, Labs, Metrics, Reference,
+                        Scores, Tests)
 
 
 @pytest.fixture

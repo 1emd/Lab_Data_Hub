@@ -1,8 +1,10 @@
-import pytest
-from rest_framework.test import APIClient
-from rest_framework import status
 import uuid
+
+import pytest
 from django.utils import timezone
+from rest_framework import status
+from rest_framework.test import APIClient
+
 from api.models import User
 
 

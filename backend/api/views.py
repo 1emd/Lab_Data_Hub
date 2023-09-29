@@ -1,13 +1,13 @@
-from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
-from api.models import (Tests, Scores, IndicatorMetric, Metrics,
-                        Indicators, Labs, Reference,)
-from api.serializers import (TestSerializer, LabsSerializer,
-                             IndicatorsSerializer, MetricsSerializer,
-                             IndicatorMetricSerializer,
-                             ReferenceSerializer, ScoreSerializer,
-                             TestCreateSerializer)
+from rest_framework.viewsets import ModelViewSet
+
 from api.filters import TestFilter
+from api.models import (IndicatorMetric, Indicators, Labs, Metrics, Reference,
+                        Scores, Tests)
+from api.serializers import (IndicatorMetricSerializer, IndicatorsSerializer,
+                             LabsSerializer, MetricsSerializer,
+                             ReferenceSerializer, ScoreSerializer,
+                             TestCreateSerializer, TestSerializer)
 
 
 class LabsViewSet(ModelViewSet):

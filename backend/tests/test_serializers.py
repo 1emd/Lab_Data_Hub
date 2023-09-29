@@ -1,13 +1,13 @@
 import pytest
 from django.utils import timezone
-from api.models import (User, Labs, Indicators, Metrics, Scores,
-                        Reference, IndicatorMetric, Tests)
-from api.serializers import (
-    UserCreateSerializer, UserSerializer, LabsSerializer,
-    IndicatorsSerializer, MetricsSerializer, ScoreSerializer,
-    ReferenceSerializer, IndicatorMetricSerializer, TestSerializer,
-    TestCreateSerializer
-)
+
+from api.models import (IndicatorMetric, Indicators, Labs, Metrics, Reference,
+                        Scores, Tests, User)
+from api.serializers import (IndicatorMetricSerializer, IndicatorsSerializer,
+                             LabsSerializer, MetricsSerializer,
+                             ReferenceSerializer, ScoreSerializer,
+                             TestCreateSerializer, TestSerializer,
+                             UserCreateSerializer, UserSerializer)
 
 
 @pytest.fixture

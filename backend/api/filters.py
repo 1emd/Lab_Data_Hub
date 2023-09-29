@@ -1,4 +1,5 @@
-from django_filters.rest_framework import (FilterSet, UUIDFilter)
+from django_filters.rest_framework import FilterSet, UUIDFilter
+
 from api.models import Tests
 
 

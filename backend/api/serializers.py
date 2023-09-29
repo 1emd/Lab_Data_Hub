@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from api.models import (Tests, Scores, IndicatorMetric, Reference,
-                        Metrics, Indicators, Labs, User)
+
+from api.models import (IndicatorMetric, Indicators, Labs, Metrics, Reference,
+                        Scores, Tests, User)
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
