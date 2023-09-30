@@ -4,12 +4,14 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
+from api.constants import DECIMAL_PLACES, MAX_DIGITS, MAX_LENGTH
+
 User = get_user_model()
 
 
 class Labs(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=MAX_LENGTH)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField()
@@ -27,7 +29,7 @@ class Tests(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     started_at = models.DateTimeField()
     completed_at = models.DateTimeField()
-    comment = models.CharField(max_length=255, null=True)
+    comment = models.CharField(max_length=MAX_LENGTH, null=True)
     lab_id = models.ForeignKey(
         Labs, on_delete=models.CASCADE, related_name='tests')
     is_active = models.BooleanField(default=True)
@@ -45,8 +47,8 @@ class Tests(models.Model):
 
 class Indicators(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=255)
-    description = models.CharField(max_length=255, null=True)
+    name = models.CharField(max_length=MAX_LENGTH)
+    description = models.CharField(max_length=MAX_LENGTH, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField()
@@ -62,9 +64,9 @@ class Indicators(models.Model):
 
 class Metrics(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=255)
-    description = models.CharField(max_length=255, null=True)
-    unit = models.CharField(max_length=255)
+    name = models.CharField(max_length=MAX_LENGTH)
+    description = models.CharField(max_length=MAX_LENGTH, null=True)
+    unit = models.CharField(max_length=MAX_LENGTH)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField()
@@ -103,7 +105,8 @@ class IndicatorMetric(models.Model):
 
 class Scores(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    score = models.DecimalField(max_digits=10, decimal_places=2)
+    score = models.DecimalField(
+        max_digits=MAX_DIGITS, decimal_places=DECIMAL_PLACES)
     test_id = models.ForeignKey(
         Tests, on_delete=models.CASCADE, related_name='scores')
     indicator_metric_id = models.ForeignKey(
@@ -123,8 +126,10 @@ class Scores(models.Model):
 
 class Reference(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    min_score = models.DecimalField(max_digits=10, decimal_places=2)
-    max_score = models.DecimalField(max_digits=10, decimal_places=2)
+    min_score = models.DecimalField(
+        max_digits=MAX_DIGITS, decimal_places=DECIMAL_PLACES)
+    max_score = models.DecimalField(
+        max_digits=MAX_DIGITS, decimal_places=DECIMAL_PLACES)
     indicator_metric_id = models.ForeignKey(
         IndicatorMetric, on_delete=models.CASCADE, related_name='references')
     is_active = models.BooleanField(default=True)

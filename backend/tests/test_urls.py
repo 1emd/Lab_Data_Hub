@@ -14,7 +14,10 @@ class TestAPIEndpoints:
     @classmethod
     def setup_class(cls):
         cls.client = APIClient()
-        cls.created_ids = {}
+
+    def setUp(self):
+        """Настройка перед каждым тестом."""
+        self.lab_id = str(uuid.uuid4())
 
     def create_test_user(self, username):
         return User.objects.create_user(username=username,
@@ -44,9 +47,9 @@ class TestAPIEndpoints:
         user = self.create_test_user(username)
         self.client.force_authenticate(user=user)
         url = '/api/labs/'
-        lab_id = str(uuid.uuid4())
+        # lab_id = str(uuid.uuid4())
         data = {
-            'id': lab_id,
+            'id': self.lab_id,
             'name': 'Новая лаборатория',
             'is_active': True,
             'created_at': timezone.now(),
@@ -55,12 +58,12 @@ class TestAPIEndpoints:
         response = self.client.post(url, data, format='json')
         assert response.status_code == status.HTTP_201_CREATED, (
             f'Ошибка при создании лаборатории {url}')
-        lab_id = response.json()['id']
-        return lab_id
+        # lab_id = response.json()['id']
+        # return lab_id
 
     def test_create_test_endpoint(self):
         """Проверяем эндпоинт для создания нового теста"""
-        lab_id = self.test_create_lab_endpoint()
+        # lab_id = self.test_create_lab_endpoint()
         test_id = str(uuid.uuid4())
         url = '/api/tests/'
         data = {
@@ -71,7 +74,7 @@ class TestAPIEndpoints:
             'is_active': True,
             'created_at': timezone.now(),
             'updated_at': timezone.now(),
-            'lab_id': lab_id
+            'lab_id': self.lab_id
         }
         response = self.client.post(url, data, format='json')
         assert response.status_code == status.HTTP_201_CREATED, (
@@ -191,18 +194,18 @@ class TestAPIEndpoints:
 
     def test_get_lab_by_id(self):
         """Проверяем эндпоинт для получения лаборатории по ID."""
-        lab_id = self.test_create_lab_endpoint()
-        url = f'/api/labs/{lab_id}/'
+        # lab_id = self.test_create_lab_endpoint()
+        url = f'/api/labs/{self.lab_id}/'
         response = self.client.get(url)
         assert response.status_code == status.HTTP_200_OK, (
             f'Ошибка при получении лаборатории по ID {url}')
         lab = response.json()
-        assert lab['id'] == lab_id, 'ID лаборатории не совпадает'
+        assert lab['id'] == self.lab_id, 'ID лаборатории не совпадает'
 
     def test_delete_lab_by_id(self):
         """Проверяем эндпоинт для удаления лаборатории по ID."""
-        lab_id = self.test_create_lab_endpoint()
-        url = f'/api/labs/{lab_id}/'
+        # lab_id = self.test_create_lab_endpoint()
+        url = f'/api/labs/{self.lab_id}/'
         response = self.client.delete(url)
         assert response.status_code == status.HTTP_204_NO_CONTENT, (
             f'Ошибка при удалении лаборатории по ID {url}')

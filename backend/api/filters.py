@@ -8,4 +8,4 @@ class TestFilter(FilterSet):
 
     class Meta:
         model = Tests
-        fields = ['lab_id']
+        fields = ('lab_id')
