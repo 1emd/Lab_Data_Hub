@@ -196,7 +196,7 @@ class TestAPIEndpoints:
         assert response.status_code == status.HTTP_200_OK, (
             f'Ошибка при получении лаборатории по ID {url}')
         lab = response.json()
-        assert lab['id'] == self.lab_id, 'ID лаборатории не совпадает'
+        assert lab['id'] == lab_id, 'ID лаборатории не совпадает'
 
     def test_delete_lab_by_id(self):
         """Проверяем эндпоинт для удаления лаборатории по ID."""
