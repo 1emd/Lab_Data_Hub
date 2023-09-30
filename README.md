@@ -63,17 +63,17 @@
 
 2. Запустите тесты с помощью команды:
 
-   ```
-   pytest
-   ```
+```
+pytest
+```
 
 ## Workflow(CI)
 
 Файл `workflow` находится в директории:
 
-    ```
-    Lab_Data_Hub/.github/workflows/main.yml
-    ```
+```
+Lab_Data_Hub/.github/workflows/main.yml
+```
 
 В этом проекте используется автоматизация с использованием GitHub Actions для запуска тестов (`flake8`, `isort`, `pytest`) при каждом пуше в ветку `main`. 
 
@@ -146,9 +146,9 @@ http://127.0.0.1:8000/admin/
 
 Для документации и тестирования API в проекте доступен Swagger UI. После успешного запуска вашего проекта, вы можете открыть Swagger UI в веб-браузере, перейдя по следующему URL:
 
-    ```
-    **http://127.0.0.1:8000/api/swagger/**
-    ```
+```
+http://127.0.0.1:8000/api/swagger/
+```
 
 ## Пример использования API
 
@@ -165,13 +165,13 @@ http://127.0.0.1:8000/admin/
 
 **Тело запроса (JSON)**:
 
-    ```json
-    {
-        "email": "example@example.com",
-        "username": "example_user",
-        "password": "example_password"
-    }
-    ```
+```json
+{
+    "email": "example@example.com",
+    "username": "example_user",
+    "password": "example_password"
+}
+```
 
 2. **Введите email и пароль для получения токена.**:
 
@@ -180,20 +180,20 @@ http://127.0.0.1:8000/admin/
 
 **Тело запроса (JSON)**:
 
-    ```json
-    {
-        "email": "example@example.com",
-        "password": "example_password"
-    }
-    ```
+```json
+{
+    "email": "example@example.com",
+    "password": "example_password"
+}
+```
 
 **Пример ответа (JSON)**:
 
-    ```json
-    {
-        "auth_token": "35b4af1ca10a8ff3d239e40188ea9fdc617dcf19"
-    }
-    ```
+```json
+{
+    "auth_token": "35b4af1ca10a8ff3d239e40188ea9fdc617dcf19"
+}
+```
 
 Данный токен необходим для совершения `POST`, `PUT`, `PATCH`, `DELETE` запросов на другие эндпоинты.
 
