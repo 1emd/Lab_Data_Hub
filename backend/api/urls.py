@@ -10,9 +10,9 @@ from api.views import (IndicatorMetricViewSet, IndicatorsViewSet, LabsViewSet,
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Your API",
+        title="Lab_data_project API",
         default_version='v1',
-        description="Your API description",
+        description="Lab_data_project",
         terms_of_service="https://www.yourapp.com/terms/",
         contact=openapi.Contact(email="contact@yourapp.com"),
         license=openapi.License(name="Your License"),

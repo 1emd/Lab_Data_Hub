@@ -103,6 +103,8 @@ def test_data(lab_data):
 
 @pytest.mark.django_db
 def test_user_create_serializer():
+    """Проверяет, что сериализатор UserCreateSerializer проходит валидацию
+    при передаче корректных данных."""
     data = {
         'email': 'test@example.com',
         'username': 'testuser',
@@ -116,6 +118,8 @@ def test_user_create_serializer():
 
 @pytest.mark.django_db
 def test_user_serializer():
+    """Проверяет, что сериализатор UserSerializer возвращает
+    правильное имя пользователя."""
     user = User.objects.create(username='testuser', email='test@example.com')
     serializer = UserSerializer(instance=user)
     expected_username = 'testuser'
@@ -130,6 +134,8 @@ def test_user_serializer():
 
 @pytest.mark.django_db
 def test_labs_serializer(lab_data):
+    """Проверяет, что сериализатор LabsSerializer возвращает
+    правильное имя лаборатории."""
     lab = Labs.objects.create(**lab_data)
     serializer = LabsSerializer(instance=lab)
     assert serializer.data['name'] == lab_data[
@@ -140,6 +146,8 @@ def test_labs_serializer(lab_data):
 
 @pytest.mark.django_db
 def test_indicators_serializer(indicators_data):
+    """Проверяет, что сериализатор IndicatorsSerializer возвращает
+    правильное имя показателя."""
     indicator = Indicators.objects.create(**indicators_data)
     serializer = IndicatorsSerializer(instance=indicator)
     assert serializer.data['name'] == indicators_data[
@@ -150,6 +158,8 @@ def test_indicators_serializer(indicators_data):
 
 @pytest.mark.django_db
 def test_metrics_serializer(metrics_data):
+    """Проверяет, что сериализатор MetricsSerializer возвращает
+    правильное имя метрики."""
     metric = Metrics.objects.create(**metrics_data)
     serializer = MetricsSerializer(instance=metric)
     assert serializer.data['name'] == metrics_data[
@@ -160,6 +170,8 @@ def test_metrics_serializer(metrics_data):
 
 @pytest.mark.django_db
 def test_score_serializer(scores_data, test_data):
+    """Проверяет, что сериализатор ScoreSerializer возвращает
+    правильное количество баллов."""
     test = Tests.objects.create(**test_data)
     scores_data['test_id'] = test
     score = Scores.objects.create(**scores_data)
@@ -175,6 +187,8 @@ def test_score_serializer(scores_data, test_data):
 
 @pytest.mark.django_db
 def test_reference_serializer(reference_data, indicator_metric_data):
+    """Проверяет, что сериализатор ReferenceSerializer возвращает
+    правильное минимальное значение справки."""
     indicator_metric = IndicatorMetric.objects.create(**indicator_metric_data)
     reference_data['indicator_metric_id'] = indicator_metric
     reference = Reference.objects.create(**reference_data)
@@ -189,6 +203,8 @@ def test_reference_serializer(reference_data, indicator_metric_data):
 
 @pytest.mark.django_db
 def test_indicator_metric_serializer(indicator_metric_data):
+    """Проверяет, что сериализатор IndicatorMetricSerializer возвращает
+    правильный идентификатор показателя."""
     indicator_metric = IndicatorMetric.objects.create(**indicator_metric_data)
     serializer = IndicatorMetricSerializer(instance=indicator_metric)
     assert serializer.data['indicator_id'] == indicator_metric_data[
@@ -201,7 +217,8 @@ def test_indicator_metric_serializer(indicator_metric_data):
 
 @pytest.mark.django_db
 def test_test_serializer(test_data):
-
+    """Проверяет, что сериализатор TestSerializer возвращает
+    правильный комментарий к тесту."""
     test_data['comment'] = None
     test = Tests.objects.create(**test_data)
     serializer = TestSerializer(instance=test)
@@ -226,6 +243,8 @@ def test_create_serializer(lab_data):
 
 
 def test_test_create_serializer(test_create_serializer):
+    """Проверяет, что сериализатор TestCreateSerializer вызывает
+    ошибку валидации для недопустимых данных."""
     serializer = TestCreateSerializer(data=test_create_serializer)
     assert not serializer.is_valid(
     ), ('Сериализатор TestCreateSerializer должен вызывать ошибку валидации'

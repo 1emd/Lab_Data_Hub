@@ -90,18 +90,21 @@ def reference_data(indicator_metric_data):
 
 @pytest.mark.django_db
 def test_create_lab(lab_data):
+    """Проверяет создание записи о лаборатории."""
     lab = Labs.objects.create(**lab_data)
     assert lab.name == lab_data['name'], 'Не удалось создать лабораторию'
 
 
 @pytest.mark.django_db
 def test_create_test(test_data):
+    """Проверяет создание записи о медицинском тесте."""
     test = Tests.objects.create(**test_data)
     assert test.comment == test_data['comment'], 'Не удалось создать тест'
 
 
 @pytest.mark.django_db
 def test_create_indicator(indicator_data):
+    """Проверяет создание записи о показателе медицинского исследования."""
     indicator = Indicators.objects.create(**indicator_data)
     assert indicator.name == indicator_data['name'], (
         'Не удалось создать показатель')
@@ -109,12 +112,14 @@ def test_create_indicator(indicator_data):
 
 @pytest.mark.django_db
 def test_create_metric(metric_data):
+    """Проверяет создание записи о метрике (единице измерения)."""
     metric = Metrics.objects.create(**metric_data)
     assert metric.name == metric_data['name'], 'Не удалось создать метрику'
 
 
 @pytest.mark.django_db
 def test_create_indicator_metric(indicator_metric_data):
+    """Проверяет создание записи о связи показателя и метрики."""
     indicator_metric = IndicatorMetric.objects.create(**indicator_metric_data)
     assert indicator_metric.indicator_id == indicator_metric_data[
         'indicator_id'], 'Не удалось создать показатель метрики'
@@ -122,6 +127,7 @@ def test_create_indicator_metric(indicator_metric_data):
 
 @pytest.mark.django_db
 def test_create_score(score_data):
+    """Проверяет создание записи о количественном значении."""
     score = Scores.objects.create(**score_data)
     assert score.score == score_data['score'], (
         'Не удалось создать количественное значение')
@@ -129,6 +135,7 @@ def test_create_score(score_data):
 
 @pytest.mark.django_db
 def test_create_reference(reference_data):
+    """Проверяет создание записи о справке."""
     reference = Reference.objects.create(**reference_data)
     assert reference.min_score == reference_data['min_score'], (
         'Не удалось создать справку')
