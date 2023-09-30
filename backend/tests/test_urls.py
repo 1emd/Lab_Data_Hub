@@ -14,10 +14,7 @@ class TestAPIEndpoints:
     @classmethod
     def setup_class(cls):
         cls.client = APIClient()
-
-    def setUp(self):
-        """Настройка перед каждым тестом."""
-        self.lab_id = str(uuid.uuid4())
+        cls.lab_id = str(uuid.uuid4())
 
     def create_test_user(self, username):
         return User.objects.create_user(username=username,
