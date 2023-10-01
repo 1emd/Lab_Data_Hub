@@ -69,4 +69,4 @@ class TestResultViewSet(ModelViewSet):
             return None
 
     def create(self, request, *args, **kwargs):
-        raise MethodNotAllowed("POST")
+        raise MethodNotAllowed('POST')

@@ -259,112 +259,117 @@ http://127.0.0.1:8000/api/swagger/
 
 
 1. **Создание лаборатории**: `/api/labs/`
-    ```json
-    {
-        "name": "Лаборатория 1",
-        "is_active": "True",
-        "created_at": "2023-09-30T15:30:00Z",
-        "updated_at": "2023-09-30T15:30:00Z"
-    }
-    ```
+```json
+{
+    "name": "Лаборатория 1",
+    "is_active": "True",
+    "created_at": "2023-09-30T15:30:00Z",
+    "updated_at": "2023-09-30T15:30:00Z"
+}
+```
 
 2. **Создание тестов**: `/api/tests/`
-    ```json
-    {
-        "started_at": "2023-09-30T15:31:00Z",
-        "completed_at": "2023-09-30T15:33:00Z",
-        "comment": "Комментарий к тесту",
-        "lab_id": "11ecc4f7-cf3a-4179-b804-b82f3d2c32b6",
-        "is_active": "True",
-        "created_at": "2023-09-30T15:31:00Z",
-        "updated_at": "2023-09-30T15:35:00Z"
-    }
-    ```
+```json
+{
+    "started_at": "2023-09-30T15:31:00Z",
+    "completed_at": "2023-09-30T15:33:00Z",
+    "comment": "Комментарий к тесту",
+    "lab_id": "11ecc4f7-cf3a-4179-b804-b82f3d2c32b6",
+    "is_active": "True",
+    "created_at": "2023-09-30T15:31:00Z",
+    "updated_at": "2023-09-30T15:35:00Z"
+}
+```
 
 3. **Создание показателей**: `/api/indicators/`
-    ```json
-    {
-        "name": "Показатель 1",
-        "description": "Описание 1",
-        "is_active": "True",
-        "created_at": "2023-09-30T15:32:00Z",
-        "updated_at": "2023-09-30T15:36:00Z"
-    }
-    ```
+```json
+{
+    "name": "Показатель 1",
+    "description": "Описание 1",
+    "is_active": "True",
+    "created_at": "2023-09-30T15:32:00Z",
+    "updated_at": "2023-09-30T15:36:00Z"
+}
+```
 
 4. **Создание метрики**: `/api/metrics/`
-    ```json
-    {
-        "name": "Метрика 1",
-        "description": "Описание метрики 1",
-        "unit": "Единица измерения 1",
-        "is_active": "True",
-        "created_at": "2023-09-30T15:33:00Z",
-        "updated_at": "2023-09-30T15:37:00Z"
-    }
-    ```
+```json
+{
+    "name": "Метрика 1",
+    "description": "Описание метрики 1",
+    "unit": "Единица измерения 1",
+    "is_active": "True",
+    "created_at": "2023-09-30T15:33:00Z",
+    "updated_at": "2023-09-30T15:37:00Z"
+}
+```
 
 5. **Создание показателя метрики**: `/indicator-metrics/`
-    ```json
-    {
-        "indicator_id": "bdda7eac-92be-45b7-b472-126be51379b8",
-        "metric_id": "03774bc2-a979-4607-8eeb-d7bd79298632",
-        "is_active": "True",
-        "created_at": "2023-09-30T15:34:00Z",
-        "updated_at": "2023-09-30T15:38:00Z"
-    }
-    ```
+```json
+{
+    "indicator_id": "bdda7eac-92be-45b7-b472-126be51379b8",
+    "metric_id": "03774bc2-a979-4607-8eeb-d7bd79298632",
+    "is_active": "True",
+    "created_at": "2023-09-30T15:34:00Z",
+    "updated_at": "2023-09-30T15:38:00Z"
+}
+```
 
 6. **Создание количественных значений**: `/api/scores/`
-    ```json
-    {
-        "score": 20,
-        "test_id": "ca249c3c-ddea-450c-9ab3-4cbeffe72069",
-        "indicator_metric_id": "1e657619-2dd9-43c9-94a5-7497fdff40ae",
-        "is_active": "True",
-        "created_at": "2023-09-30T15:36:00Z",
-        "updated_at": "2023-09-30T15:39:00Z"
-    }
-    ```
+```json
+{
+    "score": 20,
+    "test_id": "ca249c3c-ddea-450c-9ab3-4cbeffe72069",
+    "indicator_metric_id": "1e657619-2dd9-43c9-94a5-7497fdff40ae",
+    "is_active": "True",
+    "created_at": "2023-09-30T15:36:00Z",
+    "updated_at": "2023-09-30T15:39:00Z"
+}
+```
 
 7. **Создание справки**: `/api/references/`
-    ```json
-    {
-        "min_score": 10,
-        "max_score": 30,
-        "indicator_metric_id": "1e657619-2dd9-43c9-94a5-7497fdff40ae",
-        "is_active": "True",
-        "created_at": "2023-09-30T15:37:00Z",
-        "updated_at": "2023-09-30T15:40:00Z"
-    }
-    ```
+```json
+{
+    "min_score": 10,
+    "max_score": 30,
+    "indicator_metric_id": "1e657619-2dd9-43c9-94a5-7497fdff40ae",
+    "is_active": "True",
+    "created_at": "2023-09-30T15:37:00Z",
+    "updated_at": "2023-09-30T15:40:00Z"
+}
+```
 
-#### Результат:
+#### Результат исследований:
 
 После заполнения всех необходимых эндпоинтов (`/labs/`, `/tests/`, `/indicators/`, `/metrics/`, `/indicator-metrics/`, `/scores/`, `/references/`), вы можете получить результат медицинских исследований, обратившись к эндпоинту `/test-results/`.
 
 Этот эндпоинт предоставляет информацию о результатах медицинских исследований на основе данных, которые были предварительно внесены в систему. Результаты будут доступны для просмотра и анализа после того, как все необходимые данные будут добавлены в проект.
 
-- **Получение результатов исследований**: `/test-results/`
-    ```json
-    [
-        {
-            "id": "ca249c3c-ddea-450c-9ab3-4cbeffe72069",
-            "lab_id": "11ecc4f7-cf3a-4179-b804-b82f3d2c32b6",
-            "duration_seconds": 120,
-            "results": [
-                {
-                    "id": "0c53cd5a-ce74-4df1-ac2a-fa3a3580b2e6",
-                    "score": 20.0,
-                    "indicator_name": "Показатель 1",
-                    "metric_name": "Метрика 1",
-                    "metric_unit": "Единица измерения 1",
-                    "is_within_normal_range": true
-                }
-            ]
-        }
-    ]
-    ```
+**Примечание**:
+
+- Результаты исследований доступны только для **зарегистрированных** пользователей.
+- Возможность отправки `POST` запроов на данном эндпоинте отсутствует.
+
+**Получение результатов исследований**: `/test-results/`
+```json
+[
+    {
+        "id": "ca249c3c-ddea-450c-9ab3-4cbeffe72069",
+        "lab_id": "11ecc4f7-cf3a-4179-b804-b82f3d2c32b6",
+        "duration_seconds": 120,
+        "results": [
+            {
+                "id": "0c53cd5a-ce74-4df1-ac2a-fa3a3580b2e6",
+                "score": 20.0,
+                "indicator_name": "Показатель 1",
+                "metric_name": "Метрика 1",
+                "metric_unit": "Единица измерения 1",
+                "is_within_normal_range": true
+            }
+        ]
+    }
+]
+```
 
 Для получения нового результата необходимо создать новый тест `/tests/` и заполнить данные( `/indicators/`, `/metrics/`, `/indicator-metrics/`, `/scores/`,`/references/`). 
 
