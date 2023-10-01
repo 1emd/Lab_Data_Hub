@@ -1,4 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from api.filters import TestFilter
@@ -50,6 +52,8 @@ class TestResultViewSet(ModelViewSet):
     serializer_class = TestSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = TestFilter
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
