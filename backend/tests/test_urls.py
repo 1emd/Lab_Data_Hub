@@ -21,6 +21,9 @@ class TestAPIEndpoints:
 
     def test_list_endpoint(self):
         """Проверяем все эндпоинты."""
+        username = 'testuser_lab'
+        user = self.create_test_user(username)
+        self.client.force_authenticate(user=user)
         urls = [
             '/api/labs/',
             '/api/tests/',
