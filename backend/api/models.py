@@ -10,7 +10,11 @@ User = get_user_model()
 
 
 class Labs(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     name = models.CharField(max_length=MAX_LENGTH)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
@@ -26,12 +30,22 @@ class Labs(models.Model):
 
 
 class Tests(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     started_at = models.DateTimeField()
     completed_at = models.DateTimeField()
-    comment = models.CharField(max_length=MAX_LENGTH, null=True)
+    comment = models.CharField(
+        max_length=MAX_LENGTH,
+        null=True
+    )
     lab_id = models.ForeignKey(
-        Labs, on_delete=models.CASCADE, related_name='tests')
+        Labs,
+        on_delete=models.CASCADE,
+        related_name='tests'
+    )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField()
@@ -46,9 +60,16 @@ class Tests(models.Model):
 
 
 class Indicators(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     name = models.CharField(max_length=MAX_LENGTH)
-    description = models.CharField(max_length=MAX_LENGTH, null=True)
+    description = models.CharField(
+        max_length=MAX_LENGTH,
+        null=True
+    )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField()
@@ -63,9 +84,16 @@ class Indicators(models.Model):
 
 
 class Metrics(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     name = models.CharField(max_length=MAX_LENGTH)
-    description = models.CharField(max_length=MAX_LENGTH, null=True)
+    description = models.CharField(
+        max_length=MAX_LENGTH,
+        null=True
+    )
     unit = models.CharField(max_length=MAX_LENGTH)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
@@ -87,9 +115,15 @@ class IndicatorMetric(models.Model):
         editable=False
     )
     indicator_id = models.ForeignKey(
-        Indicators, on_delete=models.CASCADE, related_name='indicator_metrics')
+        Indicators,
+        on_delete=models.CASCADE,
+        related_name='indicator_metrics'
+    )
     metric_id = models.ForeignKey(
-        Metrics, on_delete=models.CASCADE, related_name='indicator_metrics')
+        Metrics,
+        on_delete=models.CASCADE,
+        related_name='indicator_metrics'
+    )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField()
@@ -104,13 +138,24 @@ class IndicatorMetric(models.Model):
 
 
 class Scores(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False)
     score = models.DecimalField(
-        max_digits=MAX_DIGITS, decimal_places=DECIMAL_PLACES)
+        max_digits=MAX_DIGITS,
+        decimal_places=DECIMAL_PLACES
+    )
     test_id = models.ForeignKey(
-        Tests, on_delete=models.CASCADE, related_name='scores')
+        Tests,
+        on_delete=models.CASCADE,
+        related_name='scores'
+    )
     indicator_metric_id = models.ForeignKey(
-        IndicatorMetric, on_delete=models.CASCADE, related_name='scores')
+        IndicatorMetric,
+        on_delete=models.CASCADE,
+        related_name='scores'
+    )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField()
@@ -125,13 +170,24 @@ class Scores(models.Model):
 
 
 class Reference(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     min_score = models.DecimalField(
-        max_digits=MAX_DIGITS, decimal_places=DECIMAL_PLACES)
+        max_digits=MAX_DIGITS,
+        decimal_places=DECIMAL_PLACES
+    )
     max_score = models.DecimalField(
-        max_digits=MAX_DIGITS, decimal_places=DECIMAL_PLACES)
+        max_digits=MAX_DIGITS,
+        decimal_places=DECIMAL_PLACES
+    )
     indicator_metric_id = models.ForeignKey(
-        IndicatorMetric, on_delete=models.CASCADE, related_name='references')
+        IndicatorMetric,
+        on_delete=models.CASCADE,
+        related_name='references'
+    )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField()
